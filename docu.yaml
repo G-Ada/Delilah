@@ -1,0 +1,124 @@
+openapi: 3.0.1
+
+info:
+  title: "Delilah Restó"
+  version: 1.0.0
+
+paths:
+  /usuarios:
+    get:
+      summary: "Muestra el listado de usuarios registrados"
+      responses:
+        200:
+          description: "Éxito"
+          content:
+            aplication/json:
+              schema:
+                $ref: "#/components/schemas/Usuario"
+        404:
+          description: "No se encontraron usuarios"
+    post:
+      summary: "Registrar un nuevo usuario"
+      responses:
+        201:
+          description: "Usuario registrado con éxito"
+          content:
+            aplication/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Usuario"
+        500:
+          description: "Error"
+  /usuarios/{id}:
+    get:
+      summary: "Muestra el usuario indicado"
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+            minimum: 1
+          description: 'ID del usuario'
+      responses:
+        200:
+          description: 'Éxito'
+          content: 
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Usuario"
+        404:
+          description: 'No encontrado'
+
+components:
+  schemas:
+    Usuario:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: "ID del usuario"
+          example: 1
+        usuario:
+          type: string
+          maximum: 100
+          description: "Nombre de usuario"
+          example: "Usuario123"
+        nombre:
+          type: string
+          maximum: 200
+          description: "Nombre real del usuario"
+          example: "Juan"
+        apellido:
+          type: string
+          maximum: 200
+          description: "Apellido del usuario"
+          example: "Gonzalez"
+        email:
+          type: string
+          maximum: 255
+          description: "Email de contacto"
+          example: "maildeejemplo@mail.com"
+        direccion:
+          type: string
+          description: "Dirección del contacto"
+          example: "Calle 123 piso 2 departamento H"
+    Productos:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: "ID del producto"
+          example: 1
+        nombre:
+          type: string
+          maximum: 200
+          description: "Nombre del producto"
+          example: Hamburguesa
+        precio:
+          type: integer
+          description: "Precio del producto expresado en números"
+          example: 288
+        imagen:
+          type: string
+          description: 'Nombre de la imagen'
+    Pedidos: 
+      type: object
+      properties: 
+        id: 
+          type: integer
+          description: 'ID del pedido'
+        estado: 
+          type: string
+          description: 'Estado del pedido que puede ser: nuevo, confirmado, preparando, enviando, cancelado, entregado'
+        hora: 
+          type: integer
+          description: 'Hora en la que fue realizado el pedido'
+        formaDePago:
+          type: string
+          maximum: 100
+          description: 'Forma en la que pagrá el ususario: tarjeta de crédito o efectivo'
+        IDUsuario:
+          type: integer
+          description: 'ID del usuario que realizó el pedido'
