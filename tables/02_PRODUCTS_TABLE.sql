@@ -1,0 +1,6 @@
+CREATE TABLE products (
+    id INT PRIMARY KEY AUTO_INCREMENT, 
+    name VARCHAR (250) NOT NULL,
+    price INT NOT NULL,
+    image VARCHAR(250)
+)

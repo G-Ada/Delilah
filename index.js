@@ -4,6 +4,9 @@ require('dotenv').config()
 
 app.use(express.json())
 
+app.use("", extraRoutes)
+app.use("/users", usersRoutes)
+
 app.use((err, req, res, next) => {
     if (err) {
         res.status(500).send("error en el servidor")
