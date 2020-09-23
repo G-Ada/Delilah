@@ -71,25 +71,24 @@ const userServices = {
     },
     updateUser: async(data, id) => {
         const info = [data.username, data.fullname, data.mail, data.phone, data.adress, data.password]
-        console.log(info)
         try {
             if(info[0]){
                 await repository.updateName(info[0], id)
             }
             if(info[1]){
-                await repository.updatelastName(info[1], id)
+                await repository.updateFullname(info[1], id)
             }
             if(info[2]){
-                await repository.updateUser(info[2], id)
+                await repository.updateMail(info[2], id)
             }
             if(info[3]){
-                await repository.updateUser(info[3], id)
+                await repository.updatePhone(info[3], id)
             }
             if(info[4]){
-                await repository.updateUser(info[4], id)
+                await repository.updateAdress(info[4], id)
             }
             if(info[5]){
-                await repository.updateUser(info[5], id)
+                await repository.updatePassword(info[5], id)
             }
         } catch (error) {
             console.log(error.message)

@@ -14,7 +14,7 @@ const userMethods = {
                 replacements:
                     [user.username,
                     user.fullname,
-                    user.mail,,
+                    user.mail,
                     user.phone,
                     user.adress,
                     hashedPass]
@@ -42,7 +42,7 @@ const userMethods = {
     },
     findUserByUserName: async (username) => {
         try {
-            const user = await sql.query('SELECT * FROM users WHERE user = :user',
+            const user = await sql.query('SELECT * FROM users WHERE username = :user',
                 {
                     replacements: {
                         user: username
@@ -88,7 +88,6 @@ const userMethods = {
     showAllUsers: async () => {
         try {
             const users = await sql.query('SELECT * FROM users', { type: sql.QueryTypes.SELECT })
-            console.log(users)
             return users
         } catch (error) {
             console.log(error.message)

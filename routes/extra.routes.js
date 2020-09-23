@@ -1,6 +1,6 @@
 const express = require('express')
 const routes = express.Router()
-const userRepository = require('../repository/users.repository')
+const userRepository = require('../repository/users.repo')
 const userServices = require('../services/users.services')
 
 routes.post('/register', async (req, res) => {
