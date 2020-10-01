@@ -16,7 +16,7 @@ Esta API permite, crear, editar y eliminar: usuarios, productos y pedidos. Exist
 1. Descargar el repositorio
 2. Abrir en el editor de código (ej: Visual Studio Code), iniciar npm e instalar las dependencies listadas en el package.json
 3. Abrir su administrador de base de datos de mySQL local y crear una nueva base de datos. (Recomendado nombrarla Delilah)
-4. Ingresar al archivo "conections.js" y editar la const sql para que este linkeada a su base de datos (corroborar que el puerto y el nombre esten correctos)
+4. Ingresar al archivo "conections.js" y editar la const sql para que este linkeada a su base de datos local (corroborar que el puerto y el nombre esten correctos)
 5. Una vez dentro de la base de datos, correr las queries que aparecen en la carpeta "tables" del repositorio, en el orden en el cual aparecen.
 6. En la terminal ingresar el comando npm run start para iniciar el servidor. Si todo esta correcto debería aparecer en la terminal "server is ready".
 7. Haga click en el boton que dice "Run in Postman" naranja que esta abajo para poder acceder a la colección de requests.
