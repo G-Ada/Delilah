@@ -1,21 +1,28 @@
 const express = require('express')
-const { async } = require('hasha')
 const routes = express.Router()
 const ordersRepository = require('../repository/orders.repo')
 const ordersServices = require('../services/orders.services')
+const middlewares = require('../middlewares/middlewares')
+const jwt = require('jsonwebtoken')
 
-routes.post('/add', async (req, res) => {
+routes.post('/add', middlewares.authentication, async (req, res) => {
     const data = req.body
     try {
-        let order = await ordersRepository.createOrder(data, data.id)
-        await ordersRepository.addProducts(data, order)
-        res.status(200).send('Creado')
+        let token = req.cookies.galletita
+        let decoded = jwt.verify(token, process.env.SECRET_KEY)
+        if(data.products.length != 0){
+            let order = await ordersRepository.createOrder(data, decoded.data)
+            await ordersRepository.addProducts(data, order)
+            res.status(200).send('Creado')
+        } else {
+            throw new Error ('El pedido no tiene productos')
+        }
     } catch (error) {
         res.status(500).json(error.message)
     }
 })
 
-routes.get('', async (req, res) => {
+routes.get('', middlewares.authorization, async (req, res) => {
     try {
         let orders = await ordersServices.getOrdersWithProducts()
         res.status(200).json(orders)
@@ -24,7 +31,7 @@ routes.get('', async (req, res) => {
     }
 })
 
-routes.get('/:id', async (req, res) => {
+routes.get('/:id', middlewares.authorization, async (req, res) => {
     let id = req.params.id
     try {
         let orders = await ordersServices.getOrdersByUserID(id)
@@ -34,7 +41,7 @@ routes.get('/:id', async (req, res) => {
     }
 })
 
-routes.put('/:id', async (req, res) => {
+routes.put('/:id', middlewares.onlyAdmin, async (req, res) => {
     try {
         let id = req.params.id
         let state = req.body.delivery_state
@@ -45,7 +52,7 @@ routes.put('/:id', async (req, res) => {
         }
     } catch (error) {
         console.log(error.message)
-        res.status(500).json({error: error.message})
+        res.status(500).json({ error: error.message })
     }
 })
 

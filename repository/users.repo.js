@@ -1,5 +1,4 @@
-const Sequelize = require("sequelize")
-const sql = new Sequelize("mysql://root@localhost:3306/delilah")
+const sql = require('../conection')
 const hash = require('hasha');
 
 const userMethods = {
@@ -7,8 +6,8 @@ const userMethods = {
         let hashedPass = hash(user.password);
         sql.query(`
             INSERT INTO users
-            (username, full_name, mail, phone, adress, password)
-            values (?, ?, ?, ?, ?, ?)
+            (username, full_name, mail, phone, adress, password, admin)
+            values (?, ?, ?, ?, ?, ?, ?)
             `,
             {
                 replacements:
@@ -17,7 +16,8 @@ const userMethods = {
                     user.mail,
                     user.phone,
                     user.adress,
-                    hashedPass]
+                    hashedPass,
+                    user.admin]
             }).then(result => {
                 return result
             }).catch(error => {

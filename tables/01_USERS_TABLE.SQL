@@ -5,5 +5,6 @@ CREATE TABLE users (
     mail VARCHAR (100) NOT NULL,
     phone INT NOT NULL,
     adress VARCHAR (800) NOT NULL,
-    password VARCHAR(200) NOT NULL
+    password VARCHAR(200) NOT NULL,
+    admin TINYINT(1) DEFAULT 0
 )

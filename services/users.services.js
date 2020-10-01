@@ -35,7 +35,10 @@ const userServices = {
                 const user = {
                     id: data[0].id,
                     username: data[0].username,
-                    fullname: data[0].fullname,
+                    fullname: data[0].full_name,
+                    mail: data[0].mail,
+                    phone: data[0].phone,
+                    adress: data[0].adress
                 }
                 return user
             } else {
@@ -51,12 +54,15 @@ const userServices = {
         const users = []
         try {
             const data = await repository.showAllUsers()
-            if(data.length !=0) {
+            if (data.length != 0) {
                 for (let i = 0; i < data.length; i++) {
                     let user = {
                         id: data[i].id,
                         username: data[i].username,
-                        fullname: data[i].fullame,
+                        fullname: data[i].full_name,
+                        mail: data[i].mail,
+                        phone: data[i].phone,
+                        adress: data[i].adress
                     }
                     users.push(user)
                 }
@@ -69,25 +75,25 @@ const userServices = {
             return error
         }
     },
-    updateUser: async(data, id) => {
+    updateUser: async (data, id) => {
         const info = [data.username, data.fullname, data.mail, data.phone, data.adress, data.password]
         try {
-            if(info[0]){
+            if (info[0]) {
                 await repository.updateName(info[0], id)
             }
-            if(info[1]){
+            if (info[1]) {
                 await repository.updateFullname(info[1], id)
             }
-            if(info[2]){
+            if (info[2]) {
                 await repository.updateMail(info[2], id)
             }
-            if(info[3]){
+            if (info[3]) {
                 await repository.updatePhone(info[3], id)
             }
-            if(info[4]){
+            if (info[4]) {
                 await repository.updateAdress(info[4], id)
             }
-            if(info[5]){
+            if (info[5]) {
                 await repository.updatePassword(info[5], id)
             }
         } catch (error) {
@@ -95,7 +101,7 @@ const userServices = {
             return error
         }
     }
-   
+
 }
 
 module.exports = userServices;

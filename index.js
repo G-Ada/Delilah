@@ -4,9 +4,11 @@ const extraRoutes = require('./routes/extra.routes')
 const usersRoutes = require('./routes/users.routes')
 const productsRoutes = require('./routes/products.routes')
 const orderRoutes = require('./routes/orders.routes')
+const cookieParser = require('cookie-parser')
 require('dotenv').config()
 
 app.use(express.json())
+app.use(cookieParser())
 
 app.use("", extraRoutes)
 app.use("/users", usersRoutes)

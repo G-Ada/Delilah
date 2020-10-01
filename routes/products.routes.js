@@ -2,6 +2,7 @@ const express = require('express')
 const routes = express.Router()
 const productsServices = require('../services/products.services')
 const productsRepo = require('../repository/products.repo')
+const middlewares = require('../middlewares/middlewares')
 
 
 routes.get('', async (req, res) => {
@@ -33,7 +34,7 @@ routes.get('/:id', async(req, res)=> {
     }
 })
 
-routes.delete('/:id', async(req, res)=> {
+routes.delete('/:id',middlewares.onlyAdmin, async(req, res)=> {
     try {
         let id = req.params.id
         let product = await productsRepo.deleteProduct(id)
@@ -48,7 +49,7 @@ routes.delete('/:id', async(req, res)=> {
     }
 })
 
-routes.put('/:id', async(req, res)=>{
+routes.put('/:id',middlewares.onlyAdmin, async(req, res)=>{
     try {
         let id = req.params.id
         let data = req.body
@@ -60,7 +61,7 @@ routes.put('/:id', async(req, res)=>{
     }
 })
 
-routes.post('/add', async(req,res)=> {
+routes.post('/add',middlewares.onlyAdmin, async(req,res)=> {
     try {
         let data = req.body
         let newProductID = await productsRepo.createProduct(data)

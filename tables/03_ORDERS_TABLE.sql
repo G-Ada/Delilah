@@ -5,5 +5,5 @@ CREATE TABLE orders (
     payment_method VARCHAR(10) NOT NULL CHECK(payment_method IN('EFECTIVO', 'TARJETA')),
     userID INT NOT NULL,
     FOREIGN KEY (userID)
-        REFERENCES users(id)
+    REFERENCES users(id)
 )

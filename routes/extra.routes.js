@@ -2,6 +2,7 @@ const express = require('express')
 const routes = express.Router()
 const userRepository = require('../repository/users.repo')
 const userServices = require('../services/users.services')
+const middlewares = require('../middlewares/middlewares')
 
 routes.post('/register', async (req, res) => {
     const user = req.body
@@ -28,10 +29,15 @@ routes.post('/login', async(req, res) => {
     const data = req.body
     let user = null
     try {
-        user = await userRepository.login(data.user, data.password)
+        user = await userRepository.login(data.username, data.password)
         if(user.length != 0){
-            let token = userServices.generateToken(data.user)
-            res.status(200).send(token)
+            let findUser = await userRepository.findUserByUserName(data.username)
+            let id = findUser[0].id
+            let token = userServices.generateToken(id)
+            res.cookie("galletita", token, {
+                httpOnly: true
+            })
+            res.status(200).send('Ha ingresado con éxito')
         } else {
             res.status(401).send('El usuario no es válido')
         }

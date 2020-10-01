@@ -1,6 +1,4 @@
-const { async } = require("hasha")
-const Sequelize = require("sequelize")
-const sql = new Sequelize("mysql://root@localhost:3306/delilah")
+const sql = require('../conection')
 const productsRepo = require('./products.repo')
 
 const ordersRepository = {

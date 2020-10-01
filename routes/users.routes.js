@@ -1,9 +1,10 @@
 const express = require('express')
+const middlewares = require('../middlewares/middlewares')
 const routes = express.Router()
 const repositoryUsers = require('../repository/users.repo')
 const userServices = require('../services/users.services')
 
-routes.get("", async (req, res) => {
+routes.get("",middlewares.onlyAdmin, async (req, res) => {
     try {
         let users = await userServices.showManyUsersData();
         if (users) {
@@ -17,7 +18,7 @@ routes.get("", async (req, res) => {
     }
 })
 
-routes.get('/:id', async(req, res) => {
+routes.get('/:id',middlewares.authorization, async(req, res) => {
     const data = req.params.id
     try {
         let user = await userServices.showUserData(data)
@@ -32,7 +33,7 @@ routes.get('/:id', async(req, res) => {
     }
 })
 
-routes.delete('/:id', async (req, res)=> {
+routes.delete('/:id',middlewares.authorization, async (req, res)=> {
     const data = req.params.id
     try {
         let user = await repositoryUsers.findUserById(data);
@@ -49,7 +50,7 @@ routes.delete('/:id', async (req, res)=> {
     }
 })
 
-routes.put('/:id', async (req, res) => {
+routes.put('/:id',middlewares.onlyUser, async (req, res) => {
     const data = req.body
     const id = req.params.id
     try {
