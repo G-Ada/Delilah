@@ -3,6 +3,7 @@ const app = express()
 const cookieParser = require('cookie-parser')
 const jwt = require('jsonwebtoken')
 const userRepository = require('../repository/users.repo')
+const productsRepo = require('../repository/products.repo')
 require('dotenv').config()
 
 app.use(cookieParser())
@@ -64,6 +65,22 @@ const middlewares = {
         } catch (error) {
             console.log(error)
             res.status(401).send(error.message)
+        }
+    },
+    checkIfProductExists: async(req, res, next) => {
+        try {
+            let data = req.body.products
+            let product = null
+            for (let i = 0; i < data.length; i++) {
+                product = await productsRepo.getProductById(data[i].id)
+                console.log(product)
+                if (!product) {
+                    throw new Error ('El o los productos seleccionados no existen')
+                }
+            }
+            next()
+        } catch (error) {
+            res.json(error.message)
         }
     }
 }

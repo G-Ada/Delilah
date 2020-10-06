@@ -5,7 +5,7 @@ const ordersServices = require('../services/orders.services')
 const middlewares = require('../middlewares/middlewares')
 const jwt = require('jsonwebtoken')
 
-routes.post('/add', middlewares.authentication, async (req, res) => {
+routes.post('/add', middlewares.authentication, middlewares.checkIfProductExists, async (req, res) => {
     const data = req.body
     try {
         let token = req.cookies.galletita
@@ -53,6 +53,23 @@ routes.put('/:id', middlewares.onlyAdmin, async (req, res) => {
     } catch (error) {
         console.log(error.message)
         res.status(500).json({ error: error.message })
+    }
+})
+
+routes.delete('/:id', middlewares.authorization, async(req, res)=> {
+    try {
+        let id = req.params.id
+        let order = await ordersRepository.getOrderByID(id)
+        console.log(order)
+        if(order.length != 0){
+            ordersRepository.deleteOrderByID(id)
+            res.status(200).send('Eliminada con éxito')
+        } else {
+            res.status(404).send('El pedido seleccionado no existe')
+        }
+    } catch (error) {
+        console.log(error.message)
+        res.status(500).send('Hubo un error')
     }
 })
 

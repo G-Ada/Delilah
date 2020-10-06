@@ -5,5 +5,5 @@ CREATE TABLE productOrders (
     quantity INT NOT NULL,
     price INT NOT NULL,
     FOREIGN KEY (productID) REFERENCES products(id),
-    FOREIGN KEY (orderID) REFERENCES orders(id)
+    FOREIGN KEY (orderID) REFERENCES orders(id) ON DELETE CASCADE
 )

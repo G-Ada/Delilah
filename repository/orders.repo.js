@@ -1,3 +1,4 @@
+const { async } = require('hasha')
 const sql = require('../conection')
 const productsRepo = require('./products.repo')
 
@@ -101,6 +102,19 @@ const ordersRepository = {
             return error
         }
         
+    },
+    deleteOrderByID: async(id) => {
+        try {
+            sql.query('DELETE FROM orders WHERE id = :id',
+                {
+                    replacements: {
+                        id: id
+                    }
+                })
+        } catch (error) {
+            console.log(error.message)
+            return error
+        }
     }
 }
 module.exports = ordersRepository

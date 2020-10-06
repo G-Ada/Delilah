@@ -37,7 +37,6 @@ routes.delete('/:id',middlewares.authorization, async (req, res)=> {
     const data = req.params.id
     try {
         let user = await repositoryUsers.findUserById(data);
-        console.log(user.length)
         if(user.length !=0){
             repositoryUsers.deleteUserById(data);
             res.status(200).send('Usuario eliminado')
