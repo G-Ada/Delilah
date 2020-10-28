@@ -1,5 +1,6 @@
 const sql = require('../conection')
 const hash = require('hasha');
+const { async } = require('hasha');
 
 const userMethods = {
     insert: (user) => {
@@ -107,87 +108,12 @@ const userMethods = {
             return error
         }
     },
-    updateUsername: async (username, id) => {
+    updateUser: async(property, value, id) => {
         try {
-            let newUser = await sql.query('UPDATE users SET username = :username WHERE id = :id',
+            let newUser = await sql.query(`UPDATE users SET ${property} = :value WHERE id = :id`,
                 {
                     replacements: {
-                        username: username,
-                        id: id
-                    }
-                })
-            return newUser
-        } catch (error) {
-            console.log(error.message)
-            return error
-        }
-    },
-    updateFullname: async (fullname, id) => {
-        try {
-            let newUser = await sql.query('UPDATE users SET full_name = :fullname WHERE id = :id',
-                {
-                    replacements: {
-                        fullname: fullname,
-                        id: id
-                    }
-                })
-            return newUser
-        } catch (error) {
-            console.log(error.message)
-            return error
-        }
-    },
-    updateMail: async (mail, id) => {
-        try {
-            let newUser = await sql.query('UPDATE users SET mail = :mail WHERE id = :id',
-                {
-                    replacements: {
-                        mail: mail,
-                        id: id
-                    }
-                })
-            return newUser
-        } catch (error) {
-            console.log(error.message)
-            return error
-        }
-    },
-    updatePhone: async (phone, id) => {
-        try {
-            let newUser = await sql.query('UPDATE users SET phone = :phone WHERE id = :id',
-                {
-                    replacements: {
-                        phone: phone,
-                        id: id
-                    }
-                })
-            return newUser
-        } catch (error) {
-            console.log(error.message)
-            return error
-        }
-    },
-    updateAdress: async (adress, id) => {
-        try {
-            let newUser = await sql.query('UPDATE users SET adress = :adress WHERE id = :id',
-                {
-                    replacements: {
-                        adress: adress,
-                        id: id
-                    }
-                })
-            return newUser
-        } catch (error) {
-            console.log(error.message)
-            return error
-        }
-    },
-    updatePassword: async (password, id) => {
-        try {
-            let newUser = await sql.query('UPDATE users SET password = :password WHERE id = :id',
-                {
-                    replacements: {
-                        password: password,
+                        value: value,
                         id: id
                     }
                 })

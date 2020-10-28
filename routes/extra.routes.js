@@ -47,8 +47,4 @@ routes.post('/login', async(req, res) => {
     }
 })
 
-routes.get('/hola', (req, res) => {
-    res.status(200).send('hola')
-})
-
 module.exports = routes;
